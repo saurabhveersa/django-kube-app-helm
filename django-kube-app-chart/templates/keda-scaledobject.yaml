@@ -1,0 +1,17 @@
+{{- if .Values.keda.enabled }}
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: {{ include "django-kube-app-chart.fullname" . }}
+  namespace: {{ .Values.app.namespace }}
+spec:
+  scaleTargetRef:
+    name: {{ include "django-kube-app-chart.fullname" . }}
+  minReplicaCount: {{ .Values.keda.minReplicas }}
+  maxReplicaCount: {{ .Values.keda.maxReplicas }}
+  triggers:
+    - type: cpu
+      metadata:
+        type: Utilization
+        value: "{{ .Values.keda.targetCPUUtilizationPercentage }}"
+{{- end }}
