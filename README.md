@@ -20,9 +20,21 @@ django-kube-app-helm/
 │ ├── ingress.yaml
 │ ├── configmap.yaml
 │ ├── hpa.yaml
-│ └── ...
+│ └── keda-scaledobject.yaml
 └── README.md
 
+
+# Deploy Using Helm
+
+helm upgrade --install django-kube-app ./django-kube-app-helm -n django-kube-ns
+
+Or let Argo CD sync the app from the Git repo.
+
+# Access Your App
+
+Once deployed, and assuming DNS entry is set:
+
+http://django-kube-app.local/api/management/?format=api
 
 
 
